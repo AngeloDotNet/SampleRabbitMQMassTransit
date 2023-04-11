@@ -1,6 +1,4 @@
-﻿using SampleMicroservice.Shared.Entity;
-
-namespace WebAPI.Backend.Core.Service;
+﻿namespace WebAPI.Backend.Core.Service;
 
 public interface IPeopleService
 {

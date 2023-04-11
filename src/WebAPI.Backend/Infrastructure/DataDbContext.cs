@@ -1,6 +1,4 @@
-﻿using SampleMicroservice.Shared.Entity;
-
-namespace WebAPI.Backend.Infrastructure;
+﻿namespace WebAPI.Backend.Infrastructure;
 
 public class DataDbContext : DbContext
 {

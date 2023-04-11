@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Backend;
+﻿using WebAPI.Backend.Core.Extensions;
+
+namespace WebAPI.Backend;
 
 public class Startup
 {
@@ -25,7 +27,7 @@ public class Startup
         services.AddMassTransit(x =>
         {
             x.AddConsumer<ConsumerPersonListRequest>();
-            //Add any additional consumers here
+            x.AddConsumer<ConsumerPersonRequest>();
 
             x.SetKebabCaseEndpointNameFormatter();
             x.UsingRabbitMq((context, rabbit) =>
@@ -41,10 +43,10 @@ public class Startup
                     e.Durable = Settings.Durable;
                     e.AutoDelete = Settings.AutoDelete;
                     e.ExchangeType = Settings.ExchangeType;
-
                     e.PrefetchCount = Settings.PrefetchCount;
+
                     e.ConfigureConsumer<ConsumerPersonListRequest>(context);
-                    //Add any additional consumers here
+                    e.ConfigureConsumer<ConsumerPersonRequest>(context);
                 });
             });
         });
@@ -59,7 +61,9 @@ public class Startup
             app.AddUseSwaggerUI(Settings.SwaggerTitle);
         }
 
+        app.AddDataPeopleDemo();
         app.UseRouting();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

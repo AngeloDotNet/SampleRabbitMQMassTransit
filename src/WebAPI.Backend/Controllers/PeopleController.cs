@@ -1,6 +1,4 @@
-﻿using SampleMicroservice.Shared.Entity;
-
-namespace WebAPI.Backend.Controllers;
+﻿namespace WebAPI.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
