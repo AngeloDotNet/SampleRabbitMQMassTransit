@@ -1,6 +1,4 @@
-﻿using WebAPI.Backend.Core.Extensions;
-
-namespace WebAPI.Backend;
+﻿namespace WebAPI.Backend;
 
 public class Startup
 {
