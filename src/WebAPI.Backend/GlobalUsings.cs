@@ -1,0 +1,13 @@
+﻿global using System.Net.Mime;
+global using MassTransit;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using NET6CustomLibrary.EFCore.Infrastructure.Interfaces;
+global using NET6CustomLibrary.Extensions;
+global using NET6CustomLibrary.Swagger;
+global using SampleMicroservice.Shared;
+global using SampleMicroservice.Shared.Entity;
+global using SampleMicroservice.Shared.Models;
+global using WebAPI.Backend.Core.Consumers;
+global using WebAPI.Backend.Core.Service;
+global using WebAPI.Backend.Infrastructure;
