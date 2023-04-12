@@ -9,5 +9,6 @@ global using SampleMicroservice.Shared;
 global using SampleMicroservice.Shared.Entity;
 global using SampleMicroservice.Shared.Models;
 global using WebAPI.Backend.Core.Consumers;
+global using WebAPI.Backend.Core.Extensions;
 global using WebAPI.Backend.Core.Service;
 global using WebAPI.Backend.Infrastructure;

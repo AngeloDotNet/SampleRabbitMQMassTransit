@@ -6,15 +6,16 @@ public class Startup
     {
         Configuration = configuration;
     }
+
     public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
-        services.AddSwaggerGenConfig(Settings.SwaggerTitle, Settings.SwaggerVersion);
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-        var retryCount = Settings.RetryCount;
-        var retryInterval = Settings.RetryInterval;
+        services.AddControllers();
+        services.AddSwaggerGenConfig(Settings.SwaggerTitle, Settings.SwaggerVersion, string.Empty, true, xmlPath);
 
         services.AddMassTransit(x =>
         {
@@ -33,14 +34,14 @@ public class Startup
                     e.Durable = Settings.Durable;
                     e.AutoDelete = Settings.AutoDelete;
                     e.ExchangeType = Settings.ExchangeType;
-
                     e.PrefetchCount = Settings.PrefetchCount;
-                    e.UseMessageRetry(r => r.Interval(retryCount, retryInterval));
+
+                    e.UseMessageRetry(r => r.Interval(Settings.RetryCount, Settings.RetryInterval));
                 });
             }));
 
             x.AddRequestClient<PeopleListRequest>();
-            //Add any additional consumers here
+            x.AddRequestClient<PersonRequest>();
         });
     }
 

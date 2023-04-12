@@ -13,6 +13,6 @@ public class ConsumerPersonListRequest : IConsumer<PeopleListRequest>
     {
         var listPeople = await peopleService.GetListItemAsync();
 
-        await context.RespondAsync<PeopleListResponse>(listPeople);
+        await context.RespondAsync(new PeopleListResponse { People = listPeople });
     }
 }

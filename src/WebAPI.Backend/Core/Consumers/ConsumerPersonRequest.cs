@@ -14,6 +14,6 @@ public class ConsumerPersonRequest : IConsumer<PersonRequest>
         var personId = context.Message.Id;
         var person = await peopleService.GetItemAsync(personId);
 
-        await context.RespondAsync<PersonResponse>(person);
+        await context.RespondAsync(new PersonResponse { Person = person });
     }
 }

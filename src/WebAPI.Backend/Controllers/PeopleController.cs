@@ -1,9 +1,6 @@
 ﻿namespace WebAPI.Backend.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-[Produces(MediaTypeNames.Application.Json)]
-public class PeopleController : ControllerBase
+public class PeopleController : BaseController
 {
     private readonly IPeopleService peopleService;
 
@@ -26,7 +23,7 @@ public class PeopleController : ControllerBase
 
         if (person == null)
         {
-            return NotFound();
+            return NotFound(person);
         }
 
         return Ok(person);
