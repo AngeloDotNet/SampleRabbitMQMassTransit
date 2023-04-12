@@ -14,14 +14,10 @@ public class Startup
         services.AddControllers();
         services.AddSwaggerGenConfig(Settings.SwaggerTitle, Settings.SwaggerVersion);
 
-        services.AddDbContext<DataDbContext>(option =>
-        {
-            option.UseInMemoryDatabase(Settings.DatabaseName);
-        });
-
+        services.AddDbContext<DataDbContext>(option => { option.UseInMemoryDatabase(Settings.DatabaseName); });
         services.AddDbContextGenericsMethods<DataDbContext>();
-        services.AddTransient<IPeopleService, PeopleService>();
 
+        services.AddTransient<IPeopleService, PeopleService>();
         services.AddMassTransit(x =>
         {
             x.AddConsumer<ConsumerPersonListRequest>();

@@ -1,9 +1,6 @@
 ﻿namespace WebAPI.Backend.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-[Produces(MediaTypeNames.Application.Json)]
-public class PeopleController : ControllerBase
+public class PeopleController : BaseController
 {
     private readonly IPeopleService peopleService;
 
