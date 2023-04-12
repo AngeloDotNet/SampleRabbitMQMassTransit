@@ -23,7 +23,7 @@ public class PeopleController : BaseController
 
         if (person == null)
         {
-            return NotFound();
+            return NotFound(person);
         }
 
         return Ok(person);
