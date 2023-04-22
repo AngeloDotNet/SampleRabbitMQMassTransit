@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Backend", "src\WebAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Frontend", "src\WebAPI.Frontend\WebAPI.Frontend.csproj", "{D95DA8B5-352C-4E22-8E9D-224B6000561B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMicroservice.Shared", "src\SampleMicroservice.Shared\SampleMicroservice.Shared.csproj", "{C3D44901-E99D-4E51-9D1A-8B6F617CCC43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleMicroservice.Shared", "src\SampleMicroservice.Shared\SampleMicroservice.Shared.csproj", "{C3D44901-E99D-4E51-9D1A-8B6F617CCC43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementi di soluzione", "Elementi di soluzione", "{627AF286-1007-470A-B316-93506B29586E}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
