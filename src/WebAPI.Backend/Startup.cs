@@ -20,8 +20,9 @@ public class Startup
         services.AddTransient<IPeopleService, PeopleService>();
         services.AddMassTransit(x =>
         {
-            x.AddConsumer<ConsumerPersonListRequest>();
-            x.AddConsumer<ConsumerPersonRequest>();
+            //x.AddConsumer<ConsumerPersonListRequest>();
+            //x.AddConsumer<ConsumerPersonRequest>();
+            x.AddConsumers(typeof(ConsumerPersonListRequest).Assembly);
 
             x.SetKebabCaseEndpointNameFormatter();
             x.UsingRabbitMq((context, rabbit) =>
@@ -39,8 +40,9 @@ public class Startup
                     e.ExchangeType = Settings.ExchangeType;
                     e.PrefetchCount = Settings.PrefetchCount;
 
-                    e.ConfigureConsumer<ConsumerPersonListRequest>(context);
-                    e.ConfigureConsumer<ConsumerPersonRequest>(context);
+                    //e.ConfigureConsumer<ConsumerPersonListRequest>(context);
+                    //e.ConfigureConsumer<ConsumerPersonRequest>(context);
+                    e.ConfigureConsumers(context);
                 });
             });
         });
