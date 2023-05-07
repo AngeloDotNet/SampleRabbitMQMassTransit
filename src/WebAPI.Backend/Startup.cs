@@ -20,9 +20,9 @@ public class Startup
         services.AddTransient<IPeopleService, PeopleService>();
         services.AddMassTransit(x =>
         {
-            //x.AddConsumer<ConsumerPersonListRequest>();
+            x.AddConsumer<ConsumerPersonListRequest>();
             //x.AddConsumer<ConsumerPersonRequest>();
-            x.AddConsumers(typeof(ConsumerPersonListRequest).Assembly);
+            //x.AddConsumers(typeof(ConsumerPersonListRequest).Assembly);
 
             x.SetKebabCaseEndpointNameFormatter();
             x.UsingRabbitMq((context, rabbit) =>
@@ -40,9 +40,38 @@ public class Startup
                     e.ExchangeType = Settings.ExchangeType;
                     e.PrefetchCount = Settings.PrefetchCount;
 
-                    //e.ConfigureConsumer<ConsumerPersonListRequest>(context);
+                    e.ConfigureConsumer<ConsumerPersonListRequest>(context);
                     //e.ConfigureConsumer<ConsumerPersonRequest>(context);
-                    e.ConfigureConsumers(context);
+                    //e.ConfigureConsumers(context);
+                });
+            });
+        });
+
+        services.AddMassTransit<ISecondBus>(x =>
+        {
+            //x.AddConsumer<ConsumerPersonListRequest>();
+            x.AddConsumer<ConsumerPersonRequest>();
+            //x.AddConsumers(typeof(ConsumerPersonListRequest).Assembly);
+
+            x.SetKebabCaseEndpointNameFormatter();
+            x.UsingRabbitMq((context, rabbit) =>
+            {
+                rabbit.Host(Settings.RabbitMQHost, Settings.RabbitMQVirtualHost, h =>
+                {
+                    h.Username(Settings.RabbitMQUsername);
+                    h.Password(Settings.RabbitMQPassword);
+                });
+
+                rabbit.ReceiveEndpoint("responsePeople2", e =>
+                {
+                    e.Durable = Settings.Durable;
+                    e.AutoDelete = Settings.AutoDelete;
+                    e.ExchangeType = Settings.ExchangeType;
+                    e.PrefetchCount = Settings.PrefetchCount;
+
+                    //e.ConfigureConsumer<ConsumerPersonListRequest>(context);
+                    e.ConfigureConsumer<ConsumerPersonRequest>(context);
+                    //e.ConfigureConsumers(context);
                 });
             });
         });

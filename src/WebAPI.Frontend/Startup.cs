@@ -40,8 +40,8 @@ public class Startup
                 });
             }));
 
-            x.AddRequestClient<PeopleListRequest>();
-            x.AddRequestClient<PersonRequest>();
+            //x.AddRequestClient<PeopleListRequest>();
+            //x.AddRequestClient<PersonRequest>();
         });
     }
 
