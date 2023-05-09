@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="NET6CustomLibrary" Version="1.0.126" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.16" />
     </ItemGroup>
 
 </Project>
