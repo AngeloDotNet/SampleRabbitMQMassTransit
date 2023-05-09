@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Frontend;
+﻿using WebAPI.Frontend.Extensions;
+
+namespace WebAPI.Frontend;
 
 public class Startup
 {
@@ -17,32 +19,7 @@ public class Startup
         services.AddControllers();
         services.AddSwaggerGenConfig(Settings.SwaggerTitle, Settings.SwaggerVersion, string.Empty, true, xmlPath);
 
-        services.AddMassTransit(x =>
-        {
-            x.AddBus(context => Bus.Factory.CreateUsingRabbitMq(c =>
-            {
-                c.QueueExpiration = TimeSpan.FromSeconds(Settings.QueueExpiration);
-                c.Host(Settings.RabbitMQHost, Settings.RabbitMQVirtualHost, h =>
-                {
-                    h.Username(Settings.RabbitMQUsername);
-                    h.Password(Settings.RabbitMQPassword);
-                });
-
-                c.ConfigureEndpoints(context);
-                c.ReceiveEndpoint(Settings.QueueNameRequest, e =>
-                {
-                    e.Durable = Settings.Durable;
-                    e.AutoDelete = Settings.AutoDelete;
-                    e.ExchangeType = Settings.ExchangeType;
-                    e.PrefetchCount = Settings.PrefetchCount;
-
-                    e.UseMessageRetry(r => r.Interval(Settings.RetryCount, Settings.RetryInterval));
-                });
-            }));
-
-            //x.AddRequestClient<PeopleListRequest>();
-            //x.AddRequestClient<PersonRequest>();
-        });
+        services.AddFrontEndRabbitMQ();
     }
 
     public void Configure(WebApplication app)
