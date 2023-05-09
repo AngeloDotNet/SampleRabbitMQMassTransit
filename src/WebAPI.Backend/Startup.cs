@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Backend;
+﻿using WebAPI.Backend.Extensions;
+
+namespace WebAPI.Backend;
 
 public class Startup
 {
@@ -18,63 +20,7 @@ public class Startup
         services.AddDbContextGenericsMethods<DataDbContext>();
 
         services.AddTransient<IPeopleService, PeopleService>();
-        services.AddMassTransit(x =>
-        {
-            x.AddConsumer<ConsumerPersonListRequest>();
-            //x.AddConsumer<ConsumerPersonRequest>();
-            //x.AddConsumers(typeof(ConsumerPersonListRequest).Assembly);
-
-            x.SetKebabCaseEndpointNameFormatter();
-            x.UsingRabbitMq((context, rabbit) =>
-            {
-                rabbit.Host(Settings.RabbitMQHost, Settings.RabbitMQVirtualHost, h =>
-                {
-                    h.Username(Settings.RabbitMQUsername);
-                    h.Password(Settings.RabbitMQPassword);
-                });
-
-                rabbit.ReceiveEndpoint(Settings.QueueNameResponse, e =>
-                {
-                    e.Durable = Settings.Durable;
-                    e.AutoDelete = Settings.AutoDelete;
-                    e.ExchangeType = Settings.ExchangeType;
-                    e.PrefetchCount = Settings.PrefetchCount;
-
-                    e.ConfigureConsumer<ConsumerPersonListRequest>(context);
-                    //e.ConfigureConsumer<ConsumerPersonRequest>(context);
-                    //e.ConfigureConsumers(context);
-                });
-            });
-        });
-
-        services.AddMassTransit<ISecondBus>(x =>
-        {
-            //x.AddConsumer<ConsumerPersonListRequest>();
-            x.AddConsumer<ConsumerPersonRequest>();
-            //x.AddConsumers(typeof(ConsumerPersonListRequest).Assembly);
-
-            x.SetKebabCaseEndpointNameFormatter();
-            x.UsingRabbitMq((context, rabbit) =>
-            {
-                rabbit.Host(Settings.RabbitMQHost, Settings.RabbitMQVirtualHost, h =>
-                {
-                    h.Username(Settings.RabbitMQUsername);
-                    h.Password(Settings.RabbitMQPassword);
-                });
-
-                rabbit.ReceiveEndpoint("responsePeople2", e =>
-                {
-                    e.Durable = Settings.Durable;
-                    e.AutoDelete = Settings.AutoDelete;
-                    e.ExchangeType = Settings.ExchangeType;
-                    e.PrefetchCount = Settings.PrefetchCount;
-
-                    //e.ConfigureConsumer<ConsumerPersonListRequest>(context);
-                    e.ConfigureConsumer<ConsumerPersonRequest>(context);
-                    //e.ConfigureConsumers(context);
-                });
-            });
-        });
+        services.AddBackEndRabbitMQ();
     }
 
     public void Configure(WebApplication app)
