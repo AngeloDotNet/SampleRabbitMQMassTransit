@@ -1,4 +1,5 @@
-﻿using WebAPI.Backend.Extensions;
+﻿using CustomLibrary.EFCore.Extensions;
+using WebAPI.Backend.Extensions;
 
 namespace WebAPI.Backend;
 
@@ -17,7 +18,7 @@ public class Startup
         services.AddSwaggerGenConfig(Settings.SwaggerTitle, Settings.SwaggerVersion);
 
         services.AddDbContext<DataDbContext>(option => { option.UseInMemoryDatabase(Settings.DatabaseName); });
-        services.AddDbContextGenericsMethods<DataDbContext>();
+        services.AddDbContextServicesGenerics<DataDbContext>();
 
         services.AddTransient<IPeopleService, PeopleService>();
         services.AddBackEndRabbitMQ();
@@ -29,7 +30,7 @@ public class Startup
 
         if (env.IsDevelopment())
         {
-            app.AddUseSwaggerUI(Settings.SwaggerTitle);
+            app.UseSwaggerUINoEmptyRoutePrefix(Settings.SwaggerTitle);
         }
 
         app.AddDataPeopleDemo();
