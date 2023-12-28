@@ -2,21 +2,20 @@
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddFrontEndRabbitMQ(this IServiceCollection services)
+    public static IServiceCollection AddFrontEndRabbitMQ(this IServiceCollection services, string vHost, string queueName)
     {
         services.AddMassTransit(x =>
         {
-            x.AddBus(context => Bus.Factory.CreateUsingRabbitMq(c =>
+            x.UsingRabbitMq((context, rabbit) =>
             {
-                c.QueueExpiration = TimeSpan.FromSeconds(Settings.QueueExpiration);
-                c.Host(Settings.RabbitMQHost, Settings.RabbitMQVirtualHost, h =>
+                rabbit.QueueExpiration = TimeSpan.FromSeconds(Settings.QueueExpiration);
+                rabbit.Host(Settings.RabbitMQHost, vHost, h =>
                 {
                     h.Username(Settings.RabbitMQUsername);
                     h.Password(Settings.RabbitMQPassword);
                 });
 
-                c.ConfigureEndpoints(context);
-                c.ReceiveEndpoint(Settings.QueueNameRequest, e =>
+                rabbit.ReceiveEndpoint(queueName, e =>
                 {
                     e.Durable = Settings.Durable;
                     e.AutoDelete = Settings.AutoDelete;
@@ -25,7 +24,7 @@ public static class DependencyInjection
 
                     e.UseMessageRetry(r => r.Interval(Settings.RetryCount, Settings.RetryInterval));
                 });
-            }));
+            });
 
             x.AddRequestClient<PeopleListRequest>();
             x.AddRequestClient<PersonRequest>();

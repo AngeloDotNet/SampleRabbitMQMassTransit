@@ -19,7 +19,7 @@ public class Startup
         services.AddControllers();
         services.AddSwaggerGenConfig(Settings.SwaggerTitle, Settings.SwaggerVersion, string.Empty, true, xmlPath);
 
-        services.AddFrontEndRabbitMQ();
+        services.AddFrontEndRabbitMQ(Settings.RabbitMQVirtualHost, Settings.QueueNameRequest);
     }
 
     public void Configure(WebApplication app)
@@ -28,7 +28,7 @@ public class Startup
 
         if (env.IsDevelopment())
         {
-            app.AddUseSwaggerUI(Settings.SwaggerTitle);
+            app.UseSwaggerUINoEmptyRoutePrefix(Settings.SwaggerTitle);
         }
 
         app.UseRouting();
