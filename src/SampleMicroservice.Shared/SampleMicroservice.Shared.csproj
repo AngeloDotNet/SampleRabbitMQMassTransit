@@ -8,8 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NET6CustomLibrary" Version="1.0.126" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.16" />
+        <PackageReference Include="CustomLibrary.EFCore" Version="1.0.38" />
+        <PackageReference Include="NET6CustomLibrary" Version="1.5.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.14" />
     </ItemGroup>
 
 </Project>
